@@ -1,69 +1,185 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Suspense } from "react";
+import { connection } from "next/server";
+import { listBranches, listCategories } from "@/server/catalog";
+import { SearchForm } from "@/components/search/search-form";
+import { Container } from "@/components/ui/page";
+import { Skeleton } from "@/components/ui/spinner";
+import { formatAED } from "@/lib/ui/format";
+import { defaultTrip } from "./_lib/trip";
+import { ArrowRightIcon, ClockIcon, MapPinIcon, ShieldIcon } from "@/components/ui/icons";
+import { EmptyState } from "@/components/ui/empty-state";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <>
+      <section className="relative overflow-hidden bg-brand-900 pb-16 pt-12 text-white sm:pb-20 sm:pt-16">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(251,165,36,0.28),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(63,142,194,0.35),transparent_50%)]"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+        <Container className="relative">
+          <p className="text-sm font-semibold uppercase tracking-wider text-accent-300">Dubai · Abu Dhabi · Sharjah</p>
+          <h1 className="mt-2 max-w-2xl text-3xl font-bold tracking-tight sm:text-5xl">
+            Rent the right car, priced clearly in AED.
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mt-3 max-w-xl text-brand-100 sm:text-lg">
+            Live availability, VAT and deposit shown up front, and one-way rentals between our UAE branches.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          <div className="mt-8 text-ink-900">
+            <Suspense fallback={<Skeleton className="h-40 w-full rounded-2xl bg-white/60 lg:h-28" />}>
+              <HomeSearch />
+            </Suspense>
+          </div>
+        </Container>
+      </section>
+
+      <Container className="mt-14">
+        <section aria-labelledby="categories-title">
+          <div className="flex items-end justify-between gap-4">
+            <h2 id="categories-title" className="text-2xl font-bold tracking-tight">
+              Browse by category
+            </h2>
+            <Link href="/search" className="text-sm font-semibold text-brand-700 hover:underline">
+              See all cars
+            </Link>
+          </div>
+          <Suspense fallback={<GridSkeleton />}>
+            <Categories />
+          </Suspense>
+        </section>
+
+        <section aria-labelledby="why-title" className="mt-16 grid gap-4 md:grid-cols-3">
+          <h2 id="why-title" className="sr-only">
+            Why DriveEasy
+          </h2>
+          <Feature icon={<ShieldIcon className="size-5" />} title="No surprises at the counter">
+            Daily rate, extras, one-way fee, 5% VAT and the refundable deposit are shown before you pay.
+          </Feature>
+          <Feature icon={<ClockIcon className="size-5" />} title="Free cancellation window">
+            Cancel online from My rentals. The refund amount is shown before you confirm.
+          </Feature>
+          <Feature icon={<MapPinIcon className="size-5" />} title="Pick up here, drop off there">
+            Collect in Dubai and return in Abu Dhabi or Sharjah with a transparent one-way fee.
+          </Feature>
+        </section>
+
+        <section aria-labelledby="branches-title" className="mt-16">
+          <div className="flex items-end justify-between gap-4">
+            <h2 id="branches-title" className="text-2xl font-bold tracking-tight">
+              Our branches
+            </h2>
+            <Link href="/branches" className="text-sm font-semibold text-brand-700 hover:underline">
+              All branches
+            </Link>
+          </div>
+          <Suspense fallback={<GridSkeleton />}>
+            <Branches />
+          </Suspense>
+        </section>
+      </Container>
+    </>
+  );
+}
+
+async function HomeSearch() {
+  await connection();
+  const branches = await listBranches();
+  if (branches.length === 0) {
+    return (
+      <p className="rounded-2xl bg-white p-5 text-ink-700">
+        No branches are open for bookings right now. Please check back soon.
+      </p>
+    );
+  }
+  return (
+    <SearchForm
+      branches={branches.map((b) => ({ id: b.id, name: b.name, city: b.city, timeZone: b.timeZone }))}
+      defaults={defaultTrip(branches[0], new Date())}
+    />
+  );
+}
+
+async function Categories() {
+  await connection();
+  const categories = await listCategories();
+  if (categories.length === 0) {
+    return <EmptyState className="mt-5" title="No categories yet" description="Our fleet is being updated." />;
+  }
+  return (
+    <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {categories.map((c) => (
+        <li key={c.id}>
+          <Link
+            href={`/search?category=${encodeURIComponent(c.id)}`}
+            className="group flex h-full flex-col rounded-2xl border border-ink-200 bg-white p-5 shadow-[var(--shadow-card)] transition hover:border-brand-300"
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <span className="text-lg font-semibold text-ink-900">{c.name}</span>
+            {c.description ? <span className="mt-1 line-clamp-2 text-sm text-ink-600">{c.description}</span> : null}
+            <span className="mt-auto flex items-center justify-between pt-4 text-sm">
+              <span className="text-ink-600">
+                {c.fromDailyRateFils != null ? (
+                  <>
+                    from <span className="font-semibold text-ink-900">{formatAED(c.fromDailyRateFils)}</span>/day
+                  </>
+                ) : (
+                  "See prices"
+                )}
+              </span>
+              <ArrowRightIcon className="size-4 text-brand-600 transition group-hover:translate-x-0.5" />
+            </span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+async function Branches() {
+  await connection();
+  const branches = await listBranches();
+  if (branches.length === 0) {
+    return <EmptyState className="mt-5" title="No branches yet" />;
+  }
+  return (
+    <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {branches.map((b) => (
+        <li key={b.id}>
+          <Link
+            href={`/branches/${b.slug}`}
+            className="flex h-full flex-col rounded-2xl border border-ink-200 bg-white p-5 shadow-[var(--shadow-card)] transition hover:border-brand-300"
           >
-            Documentation
-          </a>
-        </div>
-      </main>
+            <span className="flex items-center gap-2 text-sm font-medium text-brand-700">
+              <MapPinIcon className="size-4" /> {b.city}
+              {b.isAirport ? <span className="rounded bg-accent-100 px-1.5 text-xs text-accent-700">Airport</span> : null}
+            </span>
+            <span className="mt-1 text-lg font-semibold text-ink-900">{b.name}</span>
+            <span className="mt-1 text-sm text-ink-600">{b.address}</span>
+            {b.openingHoursText ? <span className="mt-3 text-xs text-ink-500">{b.openingHoursText}</span> : null}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function Feature({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
+  return (
+    <div className="rounded-2xl border border-ink-200 bg-white p-5">
+      <div className="inline-flex rounded-lg bg-accent-100 p-2 text-accent-700">{icon}</div>
+      <h3 className="mt-3 font-semibold text-ink-900">{title}</h3>
+      <p className="mt-1 text-sm text-ink-600">{children}</p>
+    </div>
+  );
+}
+
+function GridSkeleton() {
+  return (
+    <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <Skeleton className="h-36" />
+      <Skeleton className="h-36" />
+      <Skeleton className="h-36" />
+      <Skeleton className="h-36" />
     </div>
   );
 }

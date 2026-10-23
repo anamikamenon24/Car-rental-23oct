@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="t">
+  <title id="t">2024 Kia Sportage (Green)</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9eef5"/><stop offset="1" stop-color="#f8f5ef"/></linearGradient>
+    <linearGradient id="paint" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#64826d"/><stop offset="0.55" stop-color="#3c5a45"/><stop offset="1" stop-color="#001e09"/></linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#sky)"/>
+  <ellipse cx="402" cy="340" rx="350" ry="22" fill="#000" opacity="0.12"/>
+  <path d="M70 255 L75 200 Q80 180 120 175 L210 168 Q240 115 300 110 L590 110 Q640 112 675 170 L715 180 Q740 190 740 230 L740 282 Q740 295 726 295 L84 295 Q70 295 70 282 Z" fill="url(#paint)" stroke="#001e09" stroke-width="3"/>
+  <path d="M230 168 Q258 125 305 123 L420 123 L420 168 Z M432 123 L585 123 Q625 128 652 168 L432 168 Z" fill="#2b3644" opacity="0.85"/>
+  <rect x="695" y="232" width="34" height="12" rx="4" fill="#fff4c2"/>
+  <rect x="78" y="238" width="22" height="12" rx="4" fill="#d94040"/>
+  <g transform="translate(205 292)"><circle r="46" fill="#1d1f23"/><circle r="30" fill="#9aa1a9"/><circle r="10" fill="#4b5058"/></g><g transform="translate(605 292)"><circle r="46" fill="#1d1f23"/><circle r="30" fill="#9aa1a9"/><circle r="10" fill="#4b5058"/></g>
+  <text x="400" y="400" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="26" font-weight="600" fill="#1f2937">2024 Kia Sportage</text>
+  <text x="400" y="428" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="16" fill="#6b7280">Illustration – Green</text>
+</svg>

@@ -49,6 +49,7 @@ export function signWebhook(body: string, secret: string, timestamp: number): st
  */
 export class FakePaymentProvider implements PaymentProvider {
   readonly name = "fake";
+  readonly signatureHeader = FAKE_SIGNATURE_HEADER;
   private payments = new Map<string, Payment>();
   private deposits = new Map<string, Deposit>();
   private idempotency = new Map<string, string>();

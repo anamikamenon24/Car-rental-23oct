@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="t">
+  <title id="t">2024 Nissan Sunny (White)</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9eef5"/><stop offset="1" stop-color="#f8f5ef"/></linearGradient>
+    <linearGradient id="paint" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="0.55" stop-color="#f4f5f7"/><stop offset="1" stop-color="#b8b9bb"/></linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#sky)"/>
+  <ellipse cx="402" cy="340" rx="350" ry="22" fill="#000" opacity="0.12"/>
+  <path d="M70 250 Q72 215 120 205 L220 195 Q260 150 330 145 L480 145 Q540 150 590 195 L690 210 Q735 220 735 255 L735 280 Q735 292 722 292 L82 292 Q70 292 70 280 Z" fill="url(#paint)" stroke="#b8b9bb" stroke-width="3"/>
+  <path d="M245 196 Q275 160 335 158 L400 158 L400 196 Z M412 158 L478 158 Q525 162 565 196 L412 196 Z" fill="#2b3644" opacity="0.85"/>
+  <rect x="690" y="232" width="34" height="12" rx="4" fill="#fff4c2"/>
+  <rect x="78" y="238" width="22" height="12" rx="4" fill="#d94040"/>
+  <g transform="translate(200 292)"><circle r="46" fill="#1d1f23"/><circle r="30" fill="#9aa1a9"/><circle r="10" fill="#4b5058"/></g><g transform="translate(600 292)"><circle r="46" fill="#1d1f23"/><circle r="30" fill="#9aa1a9"/><circle r="10" fill="#4b5058"/></g>
+  <text x="400" y="400" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="26" font-weight="600" fill="#1f2937">2024 Nissan Sunny</text>
+  <text x="400" y="428" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="16" fill="#6b7280">Illustration – White</text>
+</svg>

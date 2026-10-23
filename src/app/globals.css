@@ -1,26 +1,94 @@
 @import "tailwindcss";
 
+/*
+ * DriveEasy design tokens. Light theme only (color-scheme: light) so form
+ * controls, date pickers and print output stay consistent.
+ */
+@theme {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Brand: deep gulf blue */
+  --color-brand-50: #eef6fb;
+  --color-brand-100: #d6e9f5;
+  --color-brand-200: #acd2ea;
+  --color-brand-300: #77b3d9;
+  --color-brand-400: #3f8ec2;
+  --color-brand-500: #1f70a6;
+  --color-brand-600: #135a8a;
+  --color-brand-700: #0f4a72;
+  --color-brand-800: #0d3c5c;
+  --color-brand-900: #0b2f48;
+  --color-brand-950: #071d2e;
+
+  /* Accent: desert amber */
+  --color-accent-50: #fff8eb;
+  --color-accent-100: #feecc7;
+  --color-accent-200: #fdd78a;
+  --color-accent-300: #fcbd4d;
+  --color-accent-400: #fba524;
+  --color-accent-500: #e8840b;
+  --color-accent-600: #c56206;
+  --color-accent-700: #9c4409;
+
+  /* Neutral: warm sand-tinted greys */
+  --color-ink-50: #f8f7f4;
+  --color-ink-100: #f0eee9;
+  --color-ink-200: #e2dfd7;
+  --color-ink-300: #cbc6bb;
+  --color-ink-400: #a19b8e;
+  --color-ink-500: #7a7468;
+  --color-ink-600: #5d584e;
+  --color-ink-700: #48443c;
+  --color-ink-800: #2f2c27;
+  --color-ink-900: #1d1b18;
+
+  --shadow-card: 0 1px 2px rgb(29 27 24 / 0.06), 0 4px 16px -4px rgb(29 27 24 / 0.08);
+  --shadow-pop: 0 10px 40px -10px rgb(11 47 72 / 0.35);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink-50);
+  color: var(--color-ink-900);
+  font-family: var(--font-sans);
+}
+
+/* Visible keyboard focus everywhere */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  @page {
+    margin: 12mm;
+  }
+  body {
+    background: #fff;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-plain {
+    box-shadow: none !important;
+    border-color: #999 !important;
+  }
 }

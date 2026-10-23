@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="t">
+  <title id="t">2023 Porsche 911 Carrera (Racing Yellow)</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9eef5"/><stop offset="1" stop-color="#f8f5ef"/></linearGradient>
+    <linearGradient id="paint" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffea28"/><stop offset="0.55" stop-color="#f2c200"/><stop offset="1" stop-color="#b68600"/></linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#sky)"/>
+  <ellipse cx="402" cy="340" rx="350" ry="22" fill="#000" opacity="0.12"/>
+  <path d="M60 258 Q62 228 115 218 L250 200 Q300 155 380 150 L470 152 Q540 160 600 205 L700 220 Q745 230 745 262 L745 282 Q745 292 732 292 L74 292 Q60 292 60 280 Z" fill="url(#paint)" stroke="#b68600" stroke-width="3"/>
+  <path d="M275 200 Q315 166 385 163 L455 164 L455 200 Z M466 165 Q520 172 565 200 L466 200 Z" fill="#2b3644" opacity="0.85"/>
+  <rect x="700" y="232" width="34" height="12" rx="4" fill="#fff4c2"/>
+  <rect x="78" y="238" width="22" height="12" rx="4" fill="#d94040"/>
+  <g transform="translate(195 292)"><circle r="46" fill="#1d1f23"/><circle r="30" fill="#9aa1a9"/><circle r="10" fill="#4b5058"/></g><g transform="translate(610 292)"><circle r="46" fill="#1d1f23"/><circle r="30" fill="#9aa1a9"/><circle r="10" fill="#4b5058"/></g>
+  <text x="400" y="400" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="26" font-weight="600" fill="#1f2937">2023 Porsche 911 Carrera</text>
+  <text x="400" y="428" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="16" fill="#6b7280">Illustration – Racing Yellow</text>
+</svg>

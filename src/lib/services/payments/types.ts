@@ -47,7 +47,9 @@ export type PaymentEventType =
   | "deposit.held"
   | "deposit.failed"
   | "deposit.released"
-  | "deposit.captured";
+  | "deposit.captured"
+  /** Provider event we do not act on (acknowledged and recorded only). */
+  | "ignored";
 
 export interface PaymentWebhookEvent {
   /** Stable per event. Duplicate deliveries reuse it, so handlers must dedupe on it. */
@@ -59,6 +61,8 @@ export interface PaymentWebhookEvent {
 
 export interface PaymentProvider {
   readonly name: string;
+  /** HTTP header that carries the webhook signature (e.g. "fake-signature", "stripe-signature"). */
+  readonly signatureHeader: string;
   createPayment(input: CreatePaymentInput): Promise<Payment>;
   cancelPayment(paymentId: string): Promise<Payment>;
   /** Omit amountCents for a full refund. */

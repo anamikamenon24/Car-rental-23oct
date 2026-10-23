@@ -2,11 +2,11 @@ import type { Db } from "@/db";
 import { releaseExpiredHolds } from "./release-expired-holds";
 
 // Scheduled jobs are plain functions. What triggers them is the swappable part:
-// locally `pnpm jobs <name>` (optionally `--every <seconds>`); in the cloud, a cron
-// service calling an HTTP route that checks CRON_SECRET and then calls runJob.
+// locally `pnpm jobs <name>` (optionally `--every <seconds>`); on Vercel, the cron in vercel.json
+// calls GET /api/cron/<name> with `Authorization: Bearer $CRON_SECRET`.
 
 export interface JobContext {
-  db: Db;
+  db?: Db;
   now: Date;
 }
 
@@ -22,7 +22,7 @@ export interface Job {
 
 export const jobs = {
   "release-expired-holds": {
-    description: "Release booking holds whose time limit has passed",
+    description: "Expire PENDING reservations whose hold has passed and return any money attached to them",
     run: releaseExpiredHolds,
   },
 } satisfies Record<string, Job>;
